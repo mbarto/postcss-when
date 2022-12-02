@@ -1,0 +1,90 @@
+{
+  "name": "postcss-when",
+  "version": "0.0.0",
+  "description": "PostCSS plugin that implements CSS conditions @when",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "postcss-when"
+  ],
+  "scripts": {
+    "test": "jest --coverage && eslint ."
+  },
+  "author": "Mauro Bartolomeoli <maurobartolomeoli@gmail.com>",
+  "license": "MIT",
+  "repository": "mbarto/postcss-when",
+  "engines": {
+    "node": ">=12.0"
+  },
+  "peerDependencies": {
+    "postcss": "^8.2.14"
+  },
+  "devDependencies": {
+    "@logux/eslint-config": "^46.0.1",
+    "clean-publish": "^3.4.2",
+    "eslint": "^8.1.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prefer-let": "^3.0.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-unicorn": "^37.0.1",
+    "jest": "^27.3.1",
+    "lint-staged": "^11.2.6",
+    "postcss": "^8.3.11",
+    "postcss-sharec-config": "^0.5.2",
+    "prettier": "^2.2.1",
+    "simple-git-hooks": "^2.7.0"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2017
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:jest/recommended"
+    ],
+    "rules": {
+      "jest/expect-expect": "off"
+    }
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 100
+      }
+    },
+    "testEnvironment": "node"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "jsxSingleQuote": false,
+    "quoteProps": "consistent",
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "clean-publish": {
+    "cleanDocs": true
+  },
+  "sharec": {
+    "config": "postcss-sharec-config",
+    "version": "0.5.2"
+  }
+}
