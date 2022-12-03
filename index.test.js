@@ -58,6 +58,6 @@ it('less or equal condition', async () => {
 it('not equal condition', async () => {
   await run(
     '.panel {visibility: hidden; @when (var(--my-var) != 10) { visibility: visible; }}',
-    '.panel {visibility: hidden; animation: 1s when-animation-1 paused; animation-delay: calc((1 - max(10 - var(--my-var), -1 * (10 - var(--my-var)))) * 1s)}\n@keyframes when-animation-1 {\nfrom { visibility: visible}}'
+    '.panel {visibility: hidden; animation: 1s when-animation-1 paused; animation-delay: calc((1 - clamp(0, max(10 - var(--my-var), -1 * (10 - var(--my-var))), 1)) * 1s)}\n@keyframes when-animation-1 {\nfrom { visibility: visible}}'
   )
 })

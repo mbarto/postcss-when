@@ -1,6 +1,6 @@
 {
   "name": "postcss-when",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "PostCSS plugin that implements CSS conditions @when",
   "keywords": [
     "postcss",

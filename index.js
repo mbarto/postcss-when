@@ -12,7 +12,7 @@ function getFormula(expression) {
       case ">=": return `calc(clamp(0, ${value} - var(${variableName}), 1) * 1s)`
       case "<": return `calc(clamp(0, var(${variableName}) - ${value - .000001}, 1) * 1s)`
       case "<=": return `calc(clamp(0, var(${variableName}) - ${value}, 1) * 1s)`
-      case "!=": return `calc((1 - max(${value} - var(${variableName}), -1 * (${value} - var(${variableName})))) * 1s)`
+      case "!=": return `calc((1 - clamp(0, max(${value} - var(${variableName}), -1 * (${value} - var(${variableName}))), 1)) * 1s)`
       default: throw new Error(`Operator not supported ${operator}`)
     }
 
