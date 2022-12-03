@@ -2,6 +2,16 @@
 
 [PostCSS] plugin that implements CSS conditions @when.
 
+From a proposal of Martin Auswöger: https://discourse.wicg.io/t/css-conditions-with-variables/2048.
+
+
+```
+@when       = @when ( <condition> ) { <declaration-list> }
+<condition> = <var()-function> <operator> <declaration-value>
+<operator>  = '=' | '<' | '<=' | '>' | '>=' | '!='
+```
+
+
 [PostCSS]: https://github.com/postcss/postcss
 
 ```css
