@@ -9,10 +9,27 @@ async function run (input, output, opts = { }) {
 }
 
 it('valid @when rule', async () => {
-  await run('.panel {visibility: hidden; @when (var(--selected-tab) = 1) { visibility: visible; }}', '.panel {visibility: hidden; animation: 1s when-animation-1 paused; animation-delay: calc((1 - var(--selected-tab)) * 1s)}\n@keyframes when-animation-1 {\nfrom { visibility: visible}}', {})
+  await run(
+    '.panel {visibility: hidden; @when (var(--my-var) = 1) { visibility: visible; }}',
+    '.panel {visibility: hidden; animation: 1s when-animation-1 paused; animation-delay: calc((1 - var(--my-var)) * 1s)}\n@keyframes when-animation-1 {\nfrom { visibility: visible}}'
+  )
 })
 
 it('invalid @when rule', async () => {
-  await expect(postcss([plugin({})]).process('.panel {visibility: hidden; @when (var(--selected-tab) > 1) { visibility: visible; }}', { from: undefined })).rejects.toThrow(Error)
+  await expect(postcss([plugin({})])
+    .process('.panel {visibility: hidden; @when (anything) { visibility: visible; }}', { from: undefined }))
+    .rejects.toThrow(Error)
 })
 
+it('unsupported operator', async () => {
+  await expect(postcss([plugin({})])
+    .process('.panel {visibility: hidden; @when (var(--my-var) # 1) { visibility: visible; }}', { from: undefined }))
+    .rejects.toThrow(Error)
+})
+
+it('greater condition', async () => {
+  await run(
+    '.panel {visibility: hidden; @when (var(--my-var) > 10) { visibility: visible; }}',
+    '.panel {visibility: hidden; animation: 1s when-animation-1 paused; animation-delay: calc(clamp(0, 10 - var(--my-var) ,1) * 1s)}\n@keyframes when-animation-1 {\nfrom { visibility: visible}}'
+  )
+})

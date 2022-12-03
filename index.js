@@ -1,11 +1,17 @@
 let conditions = 1
 
 function getFormula(expression) {
-  const supportedExpression = /var\((.*?)\)\s*=\s*([0-9]+)/.exec(expression)
+  const supportedExpression = /var\((.*?)\) (=|>|<|<=|>=|!=) ([0-9]+)/.exec(expression)
   if (supportedExpression) {
     const variableName = supportedExpression[1]
-    const value = supportedExpression[2]
-    return `calc((${value} - var(${variableName})) * 1s)`
+    const operator = supportedExpression[2]
+    const value = supportedExpression[3]
+    switch(operator) {
+      case "=": return `calc((${value} - var(${variableName})) * 1s)`
+      case ">": return `calc(clamp(0, ${value} - var(${variableName}) ,1) * 1s)`
+      default: throw new Error(`Operator not supported ${operator}`)
+    }
+
   }
   throw new Error(`Unsupported when expression: ${expression}`)
 
@@ -15,6 +21,9 @@ module.exports = () => {
   return {
     postcssPlugin: 'postcss-when',
 
+    Once () {
+      conditions = 1
+    },
     AtRule: {
       when: (atRule, {Declaration, AtRule, Rule}) => {
         const animationName = `when-animation-${conditions++}`
